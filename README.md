@@ -198,3 +198,78 @@ Pipeline YAML file consists of:
 
 To test pipelines locally use [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local).
 ## Jenkins
+Jenkins is open-source, self-hosted CI/CD platform. Pipelines are defined in Jenkinsfile that uses Groovy. It supports declarative or scripted syntax.
+
+Jenkins is extendable by plugins which enhance its abilities. There's a lot of available plugins.
+Examples of tools and systems that plugins integrate with:
+* **Version control systems** - e.g. Git
+* **Building tools** - e.g. Maven
+* **Testing systems** - e.g. Selenium
+* **Cloud platforms** - e.g. AWS
+* **Containerization tools** - e.g. Docker, k8s
+
+If you need plugin - just find and use it.
+
+Jenkins architecture is based on Master and Agent nodes, where Master nodes are central servers that manage jobs, store configuration, etc. and Agent nodes execute given tasks. Agent nodes can be scaled according to workload.
+
+Jenkins, similarly to earlier described tools, defines stages of pipeline and steps that they consist of.
+Example declarative Jenkinsfile pipeline:
+```
+pipeline {
+  agent <agent>
+
+  environment {}
+
+  options {}
+
+  parameters {}
+
+  triggers {}
+
+  tools {}
+
+  when {}
+
+  matrix {
+    axes {
+      axis {
+        name <axis_name>
+        values <platform1>, <platform2>
+      }
+    }
+  }
+
+  stages {
+    stage(<stage_name>) {
+      steps {
+        <command>
+        script {}
+      }
+    }
+    parallel {
+      stage(<stage_name>) {
+        steps {
+          <command>
+        }
+      }
+      stage(<stage_name>) {
+        steps {
+          <command>
+        }
+      }
+    }
+  }
+}
+```
+Pipeline Jenkinsfile consists of:
+* **agent** - specifies on which agent pipeline will be executed
+* **stage** - jobs stage
+* **environment** - defines environment variables, use credentials\(\) to access predefined Credentials by their identifier in the Jenkins environment
+* **options** - allows for configuring pipeline-specific options from within the pipeline itself, check documentation for available options
+* **parameters** - provides a list of parameters that a user should provide when triggering the pipeline, they have different types \(string, text, booleanParam, choice, password\) and consist of name, defaultValue or choices and description
+* **triggers** - defines the automated ways in which the pipeline should be re-triggered, trigger types are cron, pollSCM or upstream, use Jenkins cron syntax to define time intervals
+* **tools** - defines tools to auto-install and put on the PATH
+* **when** - allows the pipeline to determine whether the stage should be executed depending on the given condition, check documentation for available conditions
+* **parallel** - specifies a list of nested stages to be run in parallel
+* **matrix** - defines a multi-dimensional matrix of name-value combinations to be run in parallel, similar to GitHub Actions
+* **script** - specifies a block of scripted pipeline and executes that in the declarative pipeline
