@@ -49,7 +49,12 @@ DAST is scanning running application to find security vulnerabilities. Like in E
 ### Containerizing
 Containerizing is packing application with its dependencies into isolated environment called container. You can find more about it in [Docker DevOps Essentials](https://github.com/WallyS02/Docker-DevOps-Essentials). In pipeline images can be built using application prepared in earlier stages and pushed to image registry where ready to use application images are stored. 
 ### Deploying
+Deploying is a process of transferring application to production environment in controlled and safe manner, usually from staging environment. After deploy application should be closely monitored to detect any problems. When something goes wrong previous application version should be rollbacked.
 #### Strategies
+There are some strategies of deploying applications to prevent downtime during deployment. Popular examples are:
+* **Blue/Green Deployment** - creating 2 identical environments \(Blue and Green\) that differ in application version that is launched inside each of them. After testing new version of the application traffic is directed to environment with new application version.
+* **Canary Deployment** - 2 environments are created like in Blue/Green Deployment and traffic is being gradually redirected to environment with new version observing if errors occur - if not environment with new version ends up with 100% of traffic.
+* **Rolling Update** - instances of application \(e.g. containers\) with old version are replaced with new ones that contain new application version. This is default strategy for Kubernetes.
 ## GitHub Actions
 ## GitLab CI/CD
 ## Jenkins
