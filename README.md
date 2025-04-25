@@ -56,5 +56,80 @@ There are some strategies of deploying applications to prevent downtime during d
 * **Canary Deployment** - 2 environments are created like in Blue/Green Deployment and traffic is being gradually redirected to environment with new version observing if errors occur - if not environment with new version ends up with 100% of traffic.
 * **Rolling Update** - instances of application \(e.g. containers\) with old version are replaced with new ones that contain new application version. This is default strategy for Kubernetes.
 ## GitHub Actions
+Github Actions is a CI/CD platform integrated with GitHub. Pipelines are defined in YAML code and integration allows for reacting to repository events \(push, PR, issue\).
+
+Pipelines are executed by runners which can be GitHub-hosted or self-hosted. GitHub-hosted runners are managed by GitHub where OS of machine can be chosen \(Ubuntu, Windows, macOS\) and self-hosted are self-managed servers.
+
+Pipelines can be triggered by different events:
+* **repository events** - push, pull_request, release, issue_comment, etc. - check in documentation
+* **schedule** - pipelines are triggered with defined schedule, e.g. every day night tests
+* **workflow_dispatch** - manual pipeline trigger
+
+There is a lot of ready-made actions that can be used in your pipelines - just look in GitHub Marketplace.
+
+You can use secrets in your pipeline - define one in ```Settings -> Secrets and variables -> Actions``` and use it in code with ```${{ secrets.<secret_name> }}```.
+
+To test single job in different environments use matrix strategies that execute multiple, parallel job runs with different environment parameters.
+Example:
+```
+jobs:
+  <matrix_name>:
+    strategy:
+      matrix:
+        <version_variable>: [<version>]
+        os: [<platform>]
+```
+
+To run service containers in pipeline use job services.
+Example:
+```
+services:
+  <service_name>:
+    image: <service_container_image>
+    ports:
+      - <host_port>:<container_port>
+```
+
+To cache dependencies to improve pipeline execution time use ```actions/cache``` tailored to the project.
+
+To test pipelines locally use [act](https://github.com/nektos/act?tab=readme-ov-file).
+
+To define pipeline create ```.github/workflows/``` directory in projects root folder and create pipeline's YAML file there.
+
+Example pipeline YAML:
+```
+name: <name>  
+on:  
+  <trigger>:  
+    branches: [<branch_name>]  
+  <trigger>:  
+    branches: [<branch_name>]  
+
+jobs:  
+  <job_name>:  
+    needs: <other_job_name>  
+    if: <condition>  
+    runs-on: <platform>  
+    steps:  
+      - name: <name>  
+        uses: <action>
+        run: <command>
+        working-directory: <working_directory>
+        with:
+          <variable_name>: <variable_value>
+```
+Pipeline YAML file consists of:
+* **name** - pipeline name
+* **on** - when pipeline is triggered by repository event and which branches it concerns
+* **jobs** - stages of pipeline
+  * **needs** - selects jobs that must be completed before running this job
+  * **if** - prevents job from running unless defined condition is met
+  * **runs-on** - defines the type of machine to run the job on
+  * **step** - single task in job
+    * **uses** - selects an action to run as part of a step in your job
+    * **run** - runs commands in cli
+    * **working-directory** - specifies the working directory of where to run the command
+    * **with** - a map of the input parameters defined by the action
+
 ## GitLab CI/CD
 ## Jenkins
