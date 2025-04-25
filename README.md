@@ -47,6 +47,7 @@ Load / performance tests measure applications efficiency, scalability, resource 
 #### DAST
 DAST is scanning running application to find security vulnerabilities. Like in E2E tests, separate environment is needed to ensure tests credibility. Popular tools example is OWASP ZAP.
 ### Containerizing
+Containerizing is packing application with its dependencies into isolated environment called container. You can find more about it in [Docker DevOps Essentials](https://github.com/WallyS02/Docker-DevOps-Essentials). In pipeline images can be built using application prepared in earlier stages and pushed to image registry where ready to use application images are stored. 
 ### Deploying
 #### Strategies
 ## GitHub Actions
