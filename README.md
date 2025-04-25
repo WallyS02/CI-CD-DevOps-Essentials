@@ -195,4 +195,6 @@ Pipeline YAML file consists of:
   * **script** - run specified cli command
   * **artifacts** - specify files to save as job artifacts in specified path
   * **rules** - prevents job from running unless defined condition is met
+
+To test pipelines locally use [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local).
 ## Jenkins
