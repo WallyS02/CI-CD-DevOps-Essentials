@@ -130,6 +130,69 @@ Pipeline YAML file consists of:
     * **run** - runs commands in cli
     * **working-directory** - specifies the working directory of where to run the command
     * **with** - a map of the input parameters defined by the action
-
 ## GitLab CI/CD
+GitLab CI/CD is a CI/CD platform integrated with GitLab. Pipelines are defined in YAML code in file named ```.gitlab-ci.yml```.
+
+GitLab is quite similar to GitHub:
+* Runners are the same - Shared runners are GitLab-hosted, self-hosted are still self-hosted
+* Pipeline consists of stages \(analogous to jobs\) that consist of jobs \(analogous to steps\)
+
+Example pipeline YAML:
+```
+image: <host_image>
+include: <path_to_file>
+
+before_script:
+  - <commands>
+cache:
+  key: <cache_key>
+  paths:
+    - <cache_path>
+
+variables:  
+  <variable_name>: <variable_value>
+
+workflow:
+  rules:
+    - if: <condition>
+
+stages:
+  - <stage_name>
+
+<job_name>:
+  stage: <stage_name>
+  extends: <job_name>
+  trigger:
+    project: <project_name>
+    include: <child_pipeline_path>
+  services:  
+    - <service_name>  
+  environment:
+    name: <environment>
+    url: <environment_url>
+  script:
+    - <command>
+  artifacts:  
+    paths:  
+      - <artifact_path>  
+  rules:
+    - if: <condition>
+```
+Pipeline YAML file consists of:
+* **image** - specifies Docker image that the job runs in
+* **include** - include external YAML pipeline into this pipeline
+* **before_script** - specify commands to run before each job
+* **cache** - specify files to cache between jobs in specified path and with unique identifying key
+* **variables** - defines variables
+* **workflow** - controls pipeline behaviour
+  * **rules** - prevents pipeline from running unless defined condition is met
+* **stages** - stages of pipeline
+  * **stage** - jobs stage
+  * **extends** - reuse other jobs defined in this pipeline
+  * **trigger** - triggers pipeline in other project or child pipeline in current project
+  * **services** - specifies additional Docker images that are required
+  * **environment** - defines the environment that a job deploys to, with name and url
+  * **script** - run specified cli command
+  * **artifacts** - specify files to save as job artifacts in specified path
+  * **rules** - prevents job from running unless defined condition is met
 ## Jenkins
