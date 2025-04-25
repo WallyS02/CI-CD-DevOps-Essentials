@@ -25,6 +25,9 @@ According to semantic versioning \(MAJOR.MINOR.PATCH\) minor and patch versions 
 
 In pipeline dependencies should be provided before building or testing application.
 ### Building
+Building is compiling or transpiling source code into ready-to-deploy artifacts. It is done by using compilers or transpilers designed for specific language. Compilers or transpilers are usually included in package managers so there is no need for using other ones. Before building unit and integration tests should be conducted if prepared. When artifact is ready it can be published in artifact repository or used in containerizing the application.
+
+During build it is best to freeze dependencies to prevent them from unpredictable upgrades that can mess up build. Build can help detecting errors so its another layer of maintaining quality of the project.
 ### Testing
 #### Unit Tests
 #### Integration Tests
