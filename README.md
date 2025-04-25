@@ -15,6 +15,15 @@ Linting is usually the first stage at pipeline - e.g. before committing - that s
 
 SAST is another static code analysis but focuses on detecting security problems with analysed code. Like with SonarQube, it can be done together with linting by one tool.
 ### Dependencies
+Dependencies are all of external libraries, tools, frameworks, services - basically code that is not maintained by the team but used in project. Like in code in project, it can contain vulnerabilities and suddenly change so it should be managed responsibly.
+
+Dependencies are managed by package managers \(e.g. npm, pip, Maven\) to ease maintaining usage of all of them. Versions of dependencies are managed and changed cautiously if needed - they can differ in a bad way.
+
+It is important to scan dependencies for vulnerabilities with tools like Dependabot to be aware of security problems found in versions that are used in a project. These tools also help with upgrading to versions that fix these vulnerabilities so no need for searching by yourself.
+
+According to semantic versioning \(MAJOR.MINOR.PATCH\) minor and patch versions can be upgraded safely automatically, because they are compatible backwards. Major changes should be upgraded manually because they can make our project stop working correctly.
+
+In pipeline dependencies should be provided before building or testing application.
 ### Building
 ### Testing
 #### Unit Tests
