@@ -29,11 +29,23 @@ Building is compiling or transpiling source code into ready-to-deploy artifacts.
 
 During build it is best to freeze dependencies to prevent them from unpredictable upgrades that can mess up build. Build can help detecting errors so its another layer of maintaining quality of the project.
 ### Testing
+Testing is \(usually\) automatic code verification on multiple stages of pipeline. It detects bugs on early stages of application lifecycle and assures its stability at production environment. Tests divide on static and dynamic - static tests were described earlier \(Linting and SAST\).
+
+Tests can be executed really slow so some of them can be conducted in parallel to speed up their execution.
+
+Tests efficiency in pipeline can be measured by different metrics, e.g. code coverage, average test duration or error rate.
+
+In typical pipeline unit and integration tests are executed before building application and when it is ready to be launched it is tested in testing environment before deploying it to staging or production environment.
 #### Unit Tests
+Unit tests are earliest-executed tests. They verify single components in isolation. For different languages and frameworks there are different tools for unit testing \(JUnit - Java, Vitest - Vite, Jest - JavaScript\).
 #### Integration Tests
+Integration tests are conducted after unit tests. They verify cooperation of different components and modules. Usually same tools as in unit testing can be used for integration testing.
 #### End-To-End \(E2E\) Tests
+E2E tests are simulation of application user behaviour in environment that is as close as possible to production. They are conducted in separate testing environment where application prepared in earlier stages is launched. This tests are executed slowly so it is a good idea to parallelize them. Usual tools examples that are used for this type of testing are Selenium, Cypress and Playwright.
 #### Load / Performance Tests
+Load / performance tests measure applications efficiency, scalability, resource usage, response time and other metrics under high workloads. Like in E2E tests, separate environment is needed to ensure tests credibility. Usual tools examples that are used are JMeter, Locust, k6.
 #### DAST
+DAST is scanning running application to find security vulnerabilities. Like in E2E tests, separate environment is needed to ensure tests credibility. Popular tools example is OWASP ZAP.
 ### Containerizing
 ### Deploying
 #### Strategies
