@@ -135,7 +135,7 @@ GitLab CI/CD is a CI/CD platform integrated with GitLab. Pipelines are defined i
 
 GitLab is quite similar to GitHub:
 * Runners are the same - Shared runners are GitLab-hosted, self-hosted are still self-hosted
-* Pipeline consists of stages \(analogous to jobs\) that consist of jobs \(analogous to steps\)
+* Pipeline consists of stages \(which are another layer above jobs\) that consist of jobs \(analogous to GitHub Actions jobs\), script commands are analogous to GitHub Actions steps
 
 Example pipeline YAML:
 ```
